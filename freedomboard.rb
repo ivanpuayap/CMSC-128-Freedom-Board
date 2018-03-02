@@ -4,6 +4,10 @@ counter = 1
 
 configure do 
   set :views , File.expand_path('../views', __FILE__) 
+  
+get '/' do
+  erb :index
+end
 
 post '/submit' do 
   @variable1 = YAML.load_file("text.yml")
@@ -33,8 +37,4 @@ post '/search' do
   @search = params['search']
   @load = YAML.load_file("text.yml")
   erb :search
-end
-
-get '/' do
-  erb :index
 end
