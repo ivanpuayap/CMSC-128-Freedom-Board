@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'yaml/store'
 counter = 1
+set :views, Proc.new { File.join(root, "views") }
 post '/submit' do 
   @variable1 = YAML.load_file("text.yml")
   @variable1.each do |final|
