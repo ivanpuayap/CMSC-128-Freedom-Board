@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='UTF-8' />
+		<title> Freedom Board </title>
+		<link href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css' rel='stylesheet' />
+	</head>
+	<body class = 'container'>
+		<h1>You searched for <%= @search %></h1>
+	
+	<% time = Time.now %>
+  	<% @hour = time.strftime("%H").to_i %>
+  	<% @minutes = time.strftime("%M").to_i %>
+  	<% @seconds = time.strftime("%S").to_i %>
+  	<% now = (@hour*60*60) + (@minutes*60) + (@seconds) %>
+	<% before = "" %>
+  	<% sender = "" %>
+  	<% mess = "" %>
+  	<% oras = 0 %>
+
+	<h2>Post(s) from <%= @search.split(/ |\_|\-/).map(&:capitalize).join(" ") %></h2>
+	<% @counter1 = 0 %>
+	<% @load.each do |final| %>
+		<% if @search.split(/ |\_|\-/).map(&:capitalize).join(" ") == final[1][1] then%>
+			<% @counter1 += 1 %>
+			<% before = final[1][0] %>
+    		<% sender = final[1][1] %>
+    		<% message = final[1][2] %>
+
+    		<% oras = now - before %>
+
+    		<% if oras > 3600 %>
+      			<% oras /= 3600 %>
+      			<p align = "right"><%= "#{oras} hour(s) ago" %></p>
+      			<p><b><%= "#{sender}" %></b></p>
+      			<p><%= "#{message}" %></p>
+      			<hr>
+    		<% elsif oras > 60 %>
+      			<% oras /= 60 %>
+      			<p align = "right"><%= "#{oras} minute(s) ago" %></p>
+      			<p><b><%= "#{sender}" %></b></p>
+      			<p><%= "#{message}" %></p>
+      			<hr>
+    		<% else %>
+      			<p align = "right"><%= "#{oras} second(s) ago" %></p>
+      			<p><b><%= "#{sender}" %></b></p>
+      			<p><%= "#{message}" %></p>
+      			<hr>
+    		<% end %>
+    	<% end %>
+	<% end %>
+	<% if @counter1 == 0 %>
+    	<h4>No post from <%= @search %></h4>
+    <% end %>
+
+	<h2>Post(s) that have the word <%= @search %></h2>
+	<% @counter2 = 0 %>
+	<%  @load.each do |final| %>
+    	<%if final[1][2].downcase.include? @search.downcase %>
+    		<% @counter2 += 1 %>
+    		<% before = final[1][0] %>
+    		<% sender = final[1][1] %>
+    		<% message = final[1][2] %>
+
+    		<% oras = now - before %>
+
+    		<% if oras > 3600 %>
+      			<% oras /= 3600 %>
+      			<p align = "right"><%= "#{oras} hour(s) ago" %></p>
+      			<p><b><%= "#{sender}" %></b></p>
+      			<p><%= "#{message}" %></p>
+      			<hr>
+    		<% elsif oras > 60 %>
+      			<% oras /= 60 %>
+      			<p align = "right"><%= "#{oras} minute(s) ago" %></p>
+      			<p><b><%= "#{sender}" %></b></p>
+      			<p><%= "#{message}" %></p>
+      			<hr>
+    		<% else %>
+      			<p align = "right"><%= "#{oras} second(s) ago" %></p>
+      			<p><b><%= "#{sender}" %></b></p>
+      			<p><%= "#{message}" %></p>
+      			<hr>
+    		<% end %>
+    	<% end %>
+	<% end %>
+	<% if @counter2 == 0 %>
+    		<h4>There are no posts that have the word <%= @search %></h4>
+    <% end %>
+    <a href= '/'><button type='submit' class='btn btn-primary'>Go Back to Homepage</button></a>
+
+	</body>
+</html>

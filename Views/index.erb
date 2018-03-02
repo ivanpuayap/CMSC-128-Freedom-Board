@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <title>Freedom Board</title>
+    <link href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css' rel='stylesheet' />
+  </hea
+  d>
+  <body class='container'>
+    <h1><center>Freedom Board</center></h1>
+	<form action = 'submit' method='post'>
+		<center> <input style="height:100px;width:500px" type = "text" name = "msg" placeholder = "Please type your message" ></center>
+		<center>
+      <div class ="container-fluid">
+			<input style="height:50px;width:200px" type = "text" name = "name" placeholder = "Enter Name" >
+			<button type='submit' class='btn btn-primary'>Submit</button>
+		</div></center>
+	</form>
+
+  <form action = 'search' method = 'post'>
+      <input style = "height:30px;width:200px;"  type = "text" name = "search" placeholder = "Search Entry">
+      <button type = 'submit' class = 'btn btn-primary'>Search</button>
+    </div></center>
+  </form>
+  <% counter = 0 %>
+  <% variable1 = YAML.load_file("text.yml") %>
+  <% variable1.each do |final| %>
+    <% counter += 1 %>
+  <% end %>
+
+
+  <% if counter >= 1 %>
+    <% time = Time.now %>
+    <% @hour = time.strftime("%H").to_i %>
+    <% @minutes = time.strftime("%M").to_i %>
+    <% @seconds = time.strftime("%S").to_i %>
+    <% now = (@hour*60*60) + (@minutes*60) + (@seconds) %>
+    <% before = "" %>
+    <% sender = "" %>
+    <% mess = "" %>
+    <% oras = 0 %>
+  
+    <%variable1.reverse_each do |final|%>
+      <% before = final[1][0] %>
+      <% sender = final[1][1] %>
+      <% message = final[1][2] %>
+
+      <% oras = now - before %>
+
+      <% if oras > 3600 %>
+        <% oras /= 3600 %>
+        <p align = "right"><%= "#{oras} hour(s) ago" %></p>
+        <p><b><%= "#{sender}" %></b></p>
+        <p><%= "#{message}" %></p>
+        <hr>
+      <% elsif oras > 60 %>
+        <% oras /= 60 %>
+        <p align = "right"><%= "#{oras} minute(s) ago" %></p>
+        <p><b><%= "#{sender}" %></b></p>
+        <p><%= "#{message}" %></p>
+        <hr>
+      <% else %>
+        <p align = "right"><%= "#{oras} second(s) ago" %></p>
+        <p><b><%= "#{sender}" %></b></p>
+        <p><%= "#{message}" %></p>
+        <hr>
+      <% end %>
+   <% end %>
+  <% else %>
+    <h2>There are no posts yet</h2>
+  <% end %>
+  </body>
+</html>
