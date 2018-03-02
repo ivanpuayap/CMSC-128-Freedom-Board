@@ -9,7 +9,7 @@ post '/submit' do
     counter += 1
   end
 
-  time = Time.now.localtime('+05:30')
+  time = Time.now.localtime('+08:00')
   @hour = time.strftime("%H").to_i
   @minutes = time.strftime("%M").to_i
   @seconds = time.strftime("%S").to_i
