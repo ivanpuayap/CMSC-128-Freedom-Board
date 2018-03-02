@@ -2,8 +2,7 @@ require 'sinatra'
 require 'yaml/store'
 counter = 1
 
-configure do 
-  set :views , File.expand_path('../views', __FILE__) 
+set :views, Proc.new { File.join(root, "views") }
   
 get '/' do
   erb :index
