@@ -14,7 +14,7 @@ post '/submit' do
     counter += 1
   end
 
-  time = Time.now
+  time = Time.now.localtime('+8:00')
   @hour = time.strftime("%H").to_i
   @minutes = time.strftime("%M").to_i
   @seconds = time.strftime("%S").to_i
