@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'yaml'
 require 'yaml/store'
 counter = 1
 
