@@ -1,2 +1,2 @@
-require './fdboard'
-run Sinatra::Application
+require './freedomboard.rb'
+run FreedomBoard
