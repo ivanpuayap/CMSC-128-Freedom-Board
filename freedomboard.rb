@@ -1,13 +1,14 @@
 require 'sinatra'
 require 'yaml/store'
-counter = 1
 
+#class freedomboard < Sinatra::Base
   get '/' do
     @searcher = false
     erb :index
   end
 
   post '/submit' do 
+    counter = 1
     @searcher = false
     @variable1 = YAML.load_file("text.yml")
     @variable1.each do |final|
@@ -43,3 +44,4 @@ counter = 1
     @searcher = false
     erb :index
   end
+#end
