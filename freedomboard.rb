@@ -2,7 +2,6 @@ require 'sinatra'
 require 'yaml/store'
 counter = 1
 
-set :views, Proc.new { File.join(root, "views") }
   get '/' do
     @searcher = false
     erb :index
