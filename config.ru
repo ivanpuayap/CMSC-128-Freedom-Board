@@ -1,2 +1,2 @@
-require './freedomboard.rb'
+require './freedomboard'
 run Sinatra::Application
