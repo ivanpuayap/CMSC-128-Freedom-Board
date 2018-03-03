@@ -42,5 +42,5 @@ set :views, Proc.new { File.join(root, "views") }
 
   post '/back' do
     @searcher = false
-    erb:index
+    erb :index
   end
