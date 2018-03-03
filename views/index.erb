@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body class='container-fluid' style = "text-align: center;">
+      <form action='submit' method='post'>
+        <div class="form-group" style = "text-align: center;width:70%;margin-left:15%;">
+          <textarea class="form-control" placeholder = "Message" name = "message" id="message" rows="5" cols="20" style = "resize:none;"></textarea>
+          <input type = "text" name = "sender" id = "message" placeholder="Author">
+          <button type="submit" class="btn btn-primary mb-2">Post</button>
+        </div>
+      </form>
+      <form action='search' method='post'>
+
+      <div class = "container-fluid rounded" style = "width:70%;border: 5px solid black">
+        <br>
+        <div style = "text-align: right;">
+          <input type = "text" name = "search" placeholder="Search">
+          <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
+
+
+        <%message_file = YAML.load_file "messages.yml"%>
+        <% if message_file != false %>
+          <%message_file = message_file.reverse_each%>
+          <h2>Posts</h2>
+          <% message_file.each do |entry| %>
+            <%if @search == nil%>
+              <%@search = ""%>
+            <%end%>
+            <%if entry[1][0].split(/ |\_|\-/).map(&:capitalize).join(" ").include?(@search) || entry[1][1].include?(@search)%>
+              
+              <% time = Time.now.localtime("+08:00") %>
+              <% @hour = time.strftime("%H").to_i %>
+              <% @minutes = time.strftime("%M").to_i %>
+              <% @seconds = time.strftime("%S").to_i %>
+              <% @day = time.strftime("%d").to_i %>
+
+              <% @timenow = @day*24*60*60 + @hour*60*60 + @minutes*60 + @seconds %>
+              <% @oras = @timenow - entry[1][2].to_i %>
+              <div> 
+                <p style="float: left"><%= entry[1][0] %></p>
+                <% if @oras > 3600 %>
+                  <% @oras /= 3600 %>
+                  <p style="float: right"><%= "#{@oras} hour(s) ago" %></p>
+                <% elsif @oras > 60 %>
+                  <% @oras /= 60 %>
+                  <p style="float: right"><%= "#{@oras} minute(s) ago" %></p>
+                <% elsif @oras > 86400 %>
+                  <% @oras /= 86400 %>
+                  <p style="float: right"><%= "#{@oras} day(s) ago" %></p>
+                <% else %>
+                  <p style="float: right"><%= "#{@oras} second(s) ago" %></</p>
+                <% end %>
+              </div>
+              <pre>
+              </pre>
+              <p align = "justify"></br><%= entry[1][1] %></br></p>
+              <hr>
+            <%else%>
+            <h4>No user or post with the word <%= @search %></h4>
+            <%end%>
+          <%end%>
+        <% else %>
+          <h4>No post yet!</h4>
+        <%end%>
+        <br>
+      </div>
+      </form>
+  </body>
+</html>
