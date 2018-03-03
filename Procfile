@@ -1,3 +1,2 @@
 web: bundle exec rackup config.ru -p $PORT
-web: bundle exec rails config.ru -p $PORT
-heroku ps:scale web=1
+heroku ps:scale web=2
