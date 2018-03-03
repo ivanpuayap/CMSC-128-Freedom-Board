@@ -3,14 +3,11 @@ require 'yaml/store'
 counter = 1
 
 set :views, Proc.new { File.join(root, "views") }
-
-class FreedomBoard < Sinatra::Base
-  
   get '/' do
     @searcher = false
     erb :index
   end
-  
+
   post '/submit' do 
     @searcher = false
     @variable1 = YAML.load_file("text.yml")
@@ -47,4 +44,3 @@ class FreedomBoard < Sinatra::Base
     @searcher = false
     erb:index
   end
-end
